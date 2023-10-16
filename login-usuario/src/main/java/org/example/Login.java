@@ -1,5 +1,7 @@
 package org.example;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,102 +12,43 @@ public class Login {
     private List<String> nome = new ArrayList<>();
     private List<String> senha = new ArrayList<>();
     private Boolean continuar = true;
-
     Scanner leitor = new Scanner(System.in);
+    Conexao conexao = new Conexao();
+    JdbcTemplate con = conexao.getConnection();
 
-    public String adicionarUsuario(Usuario usuario) {
-        nome.add(usuario.getNome());
-        senha.add(usuario.getSenha());
-
-        return  "Usuario adicionado com sucesso";
-    }
-
-        public void mensagem(Usuario nome){
-
+    Usuario user = new Usuario();
+        public void mensagem() {
+            Usuario newUsuario = new Usuario();
+            Integer escolha;
             System.out.printf("""
-                ===== Bem vindo %s =====
-                -----------------------------------
-                """, nome.getNome());
+                    ===== Bem vindo %s =====
+                    -----------------------------------
+                    """);
+            System.out.println("""
+                    1 - Criar usuário
+                    2 - Fazer login
+                    -----------------------------------
+                    """);
+            escolha = leitor.nextInt();
+            if (escolha == 1) {
 
-        while (continuar) {
+                System.out.println("Digite seu nome de usuário");
+                newUsuario.setusuarioMonitoramento(leitor.nextLine());
+                System.out.println("Digite sua senha");
+                newUsuario.setsenhaMonitoramento(leitor.nextLine());
+                user.adicionarUsuario(newUsuario);
+            } else if (escolha == 2) {
+                System.out.println("Digite seu nome de usuário");
+                newUsuario.setusuarioMonitoramento(leitor.nextLine());
+                System.out.println("Digite sua senha");
+                newUsuario.setsenhaMonitoramento(leitor.nextLine());
+                login(newUsuario);
 
-            System.out.printf("""
-                1 - ir para estatisticas
-                2 - sair da aplicação
-               -----------------------------------
-                
-                """, nome.getNome());
-            Integer resposta = leitor.nextInt();
-
-            if (resposta == 1){
-                graphcar();
-            } else if (resposta == 2) {
-                continuar = false;
             } else {
-                System.out.printf("""
-                        ===== Insira um valor válido =====
-                        1 - ir para estatisticas
-                        2 - sair da aplicação
-                        -----------------------------------
-                        """);
-                resposta = leitor.nextInt();
+                System.out.println("Escolha inválida");
 
-                if (resposta == 2){
-                    continuar = false;
-                }
             }
         }
-
-    }
-
-
-    public  void graphcar(){
-
-        Integer sorteio = ThreadLocalRandom.current().nextInt(1,4);
-
-        if (sorteio == 1){
-            System.out.printf("""
-                -----------------------------------
-                CPU - 50%%
-                RAM - 75%%
-                GPU - 90%% 
-                -----------------------------------
-                       Atenção ao uso de GPU
-                -----------------------------------
-                """);
-        } else if (sorteio == 2) {
-            System.out.printf("""
-                -----------------------------------
-                CPU - 50%%
-                RAM - 95%%
-                GPU - 60%% 
-                -----------------------------------
-                       Atenção ao uso de RAM
-                -----------------------------------
-                """);
-        } else if (sorteio == 3) {
-            System.out.printf("""
-                -----------------------------------
-                CPU - 90%%
-                RAM - 75%%
-                GPU - 60%% 
-                -----------------------------------
-                       Atenção ao uso de CPU
-                -----------------------------------
-                """);
-        } else {
-            System.out.printf("""
-                -----------------------------------
-                CPU - 50%%
-                RAM - 75%%
-                GPU - 70%% 
-                -----------------------------------
-                 Tudo certo, tenha uma boa viagem
-                -----------------------------------
-                """);
-        }
-
-    }
 
     public void login(Usuario usuario){
 
@@ -115,17 +58,13 @@ public class Login {
         System.out.println("Insira sua senha");
         String senhaUsuario = leitor.nextLine();
 
-        for (int i = 0; i < nome.size(); i++) {
+        if(user.usuarioExists(nomeUsuario, senhaUsuario)){
 
-            if (nomeUsuario.equals(nome.get(i)) && senhaUsuario.equals(senha.get(i))){
-
-                mensagem(usuario);
-            } else {
-
-                System.out.println("nome ou senha inválidos");
-            }
         }
+        else if(user.usuarioExists(nomeUsuario, senhaUsuario)){
+            
 
+        }
     }
 
 }

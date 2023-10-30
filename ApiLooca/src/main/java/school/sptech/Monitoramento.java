@@ -250,10 +250,11 @@ public void monitorarCPU() {
             ProcessoGrupo processoGrupo = new ProcessoGrupo();
 
             List<Processo> processos = processoGrupo.getProcessos();
+            Integer id = con.queryForObject("SELECT idDadosServidor FROM DadosServidor ORDER BY idDadosServidor DESC LIMIT 1", Integer.class);
 
             for (Processo processo : processos){
                 System.out.println(processo);
-                con.update("INSERT INTO Processos (idProcessos, nomeProcesso) VALUES (?,?)",processo.getPid(), processo.getNome());
+                con.update("INSERT INTO Processos (nomeProcesso, fkDadosServidor) VALUES (?,?)", processo.getNome(), id);
             }
 
             i++;

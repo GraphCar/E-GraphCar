@@ -20,21 +20,7 @@ public class Main {
 
         Conexao conexao = new Conexao();
         JdbcTemplate con = conexao.getConecaoDoBanco();
-//
-//    Looca looca1 = new Looca();
-//
-//    Memoria memoria = looca1.getMemoria();
-//
-//    Processador processador = looca1.getProcessador();
-//
-//    DiscoGrupo discoGrupo = looca1.getDisco();
-//
-//    List<Volume> volumes = discoGrupo.getVolumes();
-//
-//    System.out.println(memoria.getEmUso());
-//    System.out.println(processador.getUso());
-//    System.out.println(volumes.get(0).getDisponivel());
-//
+
         Login login = new Login(new JdbcTemplate());
         login.mensagem();
 

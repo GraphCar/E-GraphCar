@@ -21,8 +21,7 @@ public class Monitoramento {
     JdbcTemplate con = conexao.getConecaoDoBanco();
     DadosServidor dadosServidor = new DadosServidor();
     public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
+
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RED = "\u001B[31m";
     public void mensagemMonitorar() {
@@ -250,11 +249,10 @@ public void monitorarCPU() {
             ProcessoGrupo processoGrupo = new ProcessoGrupo();
 
             List<Processo> processos = processoGrupo.getProcessos();
-            Integer id = con.queryForObject("SELECT idDadosServidor FROM DadosServidor ORDER BY idDadosServidor DESC LIMIT 1", Integer.class);
 
             for (Processo processo : processos){
                 System.out.println(processo);
-                con.update("INSERT INTO Processos (nomeProcesso, fkDadosServidor) VALUES (?,?)", processo.getNome(), id);
+                con.update("INSERT INTO Processos (idProcessos, nomeProcesso) VALUES (?,?)",processo.getPid(), processo.getNome());
             }
 
             i++;

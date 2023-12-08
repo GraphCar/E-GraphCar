@@ -9,7 +9,7 @@ public class ConexaoSqlServer extends Conexao {
         SQLServerDataSource dataSource = new SQLServerDataSource();
         dataSource.setUser("sa");
         dataSource.setPassword("urubu100");
-        dataSource.setServerName("54.84.147.78");
+        dataSource.setServerName("52.71.21.100");
         dataSource.setDatabaseName("GraphCar");
         dataSource.setTrustServerCertificate(true);
         this.conexaoDoBanco = new JdbcTemplate(dataSource);

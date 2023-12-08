@@ -1,5 +1,5 @@
 target/
-!target/lp-entregavel-sp3-1.0-SNAPSHOT-jar-with-dependencies-windows.jar
+!*/target/lp-entregavel-sp3-1.0-SNAPSHOT-jar-with-dependencies-windows.jar
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
